@@ -391,10 +391,10 @@ x=9
 4.6做好了，一个小型的集群！
 -------
     
-    新建一个`mpitest.c` 文件<br>
+新建一个mpitest.c 文件
 	
 ```c
-    #include <mpi.h>
+#include <mpi.h>
 #include <stdio.h>
 
 int main(int argc, char** argv) {
@@ -418,6 +418,7 @@ int main(int argc, char** argv) {
   MPI_Finalize();
 }
 ```
+	
    <br>
     拷贝编译完成的a.out，到另外一台机器，`保证两台机器的a.out出现在同一个目录位置。`
     
