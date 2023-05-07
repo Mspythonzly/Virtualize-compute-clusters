@@ -114,7 +114,7 @@ End
 -----
 
 需要cpu，有缓存，有内存，还需要网络连接，专用的工业超算还需要专门设计节点，比如下图就是cray的节点。<br>
-![](https://pic4.zhimg.com/80/v2-bcb98be32d7abc552534caf6bdd4c947_720w.webp) <br>
+![](https://pic4.zhimg.com/80/v2-bcb98be32d7abc552534caf6bdd4c947_720w.webp)  <br>
 
 [Performance Computer, XC Series Supercomputers](http://www.cray.com/products/computing/xc-series?tab=technology "进入网站")
 
