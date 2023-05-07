@@ -17,7 +17,7 @@
 ##并行计算（parallel computing）是指在并行机上，把一个应用分解成多个子任务，分配给不同的处理器，各个处理器之间协同，并行执行子任务，目的是加快计算速度。
 由此需要
 
-1，硬件支持，需要并行机，多核，单机的话，单个任务在一个核心上执行和多核上执行速度也不一样，'多机就需要网络连接'。
+1，硬件支持，需要并行机，多核，单机的话，单个任务在一个核心上执行和多核上执行速度也不一样，`多机就需要网络连接`。
 
 2，计算的问题可以并行，如果计算的问题是流水线，互相关联度很高，完全没法并行，那么就没有必要用并行计算或者超算。
 
@@ -26,3 +26,22 @@
 那么什么样的问题需要超算呢，大规模的科学和工程计算，比如天气预报，需要24小时完成48小时的数值模拟，至少需要635万个网格点，内存大于1TB，计算性能要求高达25万亿次／s。
 
 ------
+#1.2MPI消息传递接口
+##MPI（message Passing interface）是全世界联合建立的消息传递编程标准，目的是用消息传递提供一个高效可扩展，统一的编程环境，是目前最为通用的并行编程方式，也是主要应用的。MPI有多种"实现"，包括mpich1/mpich2、openmpi、lam-mpi等，每种mpi的实现需要配合相应的编译器，才能发挥作用。
+#c语言mpi hello world：
+```C
+#include <mpi.h>
+#include <stdio.h>
+
+int
+main(int argc, char *argv[])
+{
+    int rank, size;
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &size);
+    printf("Hello, World.  I am %d of %d\n", rank, size);
+    MPI_Finalize();
+    return 0;
+}
+```
