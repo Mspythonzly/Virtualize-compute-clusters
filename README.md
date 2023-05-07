@@ -420,7 +420,7 @@ int main(int argc, char** argv) {
 ```
 	
    <br>
-    拷贝编译完成的a.out，到另外一台机器，`保证两台机器的a.out出现在同一个目录位置。`
+    拷贝编译完成的a.out，到另外一台机器，保证两台机器的a.out出现在同一个目录位置。
     
 ```pseudocode
     scp ~/a.out XXX.65.121.102:~/a.out 
@@ -434,7 +434,7 @@ server02 cpu=4
 ```
     
     <br>
-    然后在这个目录下运行a.out`（确保a.out也在这个文件夹下）`
+    然后在这个目录下运行a.out（确保a.out也在这个文件夹下）`
     <br>
 ```pseudocode
     %mpirun --machinefile machinefile -np 8 a.out
