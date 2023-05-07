@@ -521,9 +521,9 @@ Linux挂载NFS的客户端非常简单的命令，先创建挂载目录，然后
 sudo mount -t nfs  xxx.168.0.100:/nfs /nfs
 ```
 	
-```pseudocode	
+	
 可以先查看<br>
-```
+
 
 ```pseudocode	
 showmount -e 192.168.0.100
