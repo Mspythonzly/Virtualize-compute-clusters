@@ -267,6 +267,181 @@ rsync -avz ~/.ssh XXX.65.121.102:~/.
     ```
     
    <br>
+*还记得我们刚才举的c语言的mpi的helloworld例子吗，把它输入进去<br>
+
+*然后`ctrl+x`，`ctrl+s` ，保存<br>
+
+*然后`ctrl+x`，`ctrl+c` ，退出emacs<br>
+    ```pseudocode
+    mpicc test.c 
+    ```
+    <br>
+    编译<br>
+    
+   ```pseudocode
+    %mpirun -np 2 a.out
+Hello, World.  I am 0 of 2
+Hello, World.  I am 1 of 2
+    ```
+    <br>
+    运行，`-np`就是使用几个节点进行计算，上面这是两个的结果<br>
+    ```pseudocode
+    %mpirun -np 4 a.out
+Hello, World.  I am 0 of 4
+Hello, World.  I am 1 of 4
+Hello, World.  I am 2 of 4
+Hello, World.  I am 3 of 4
+%mpirun -np 8 a.out
+Hello, World.  I am 0 of 8
+Hello, World.  I am 1 of 8
+Hello, World.  I am 3 of 8
+Hello, World.  I am 4 of 8
+Hello, World.  I am 5 of 8
+Hello, World.  I am 6 of 8
+Hello, World.  I am 7 of 8
+Hello, World.  I am 2 of 8
+    ```
+    <br>
+    *利用OpenMP进行多核并行<br>
+    随着现在cpu的核数月来越多，充分的利用节点内的多核也是很重要的，OpenMP（Open Multi-Processing）是一套支持跨平台共享内存方式的多线程并发的编程API。<br>
+
+它的特点就是不需要特殊的代码结构，而是利用编译器来决定，而且共享内存的方式在某些算法中效率更高，至于openMP和MPI哪个效率更高，取决于平台和算法。<br>
+
+`openmp.c`的示范代码<br>
+    ```c
+    #include <stdio.h>
+#include <omp.h>
+int main (void)
+{
+  int x;
+  int i;
+  int a[8]={0,0,0,0,0,0,0,0};
+  x = 2;
+  #pragma omp parallel num_threads(8) 
+  {
+    if(omp_get_thread_num()==0)
+      printf ("um_thds=%d\n", omp_get_num_threads());
+    #pragma omp for
+    for (i=0; i<omp_get_num_threads(); i++)
+    {
+      x++;
+      a[i]++;
+      printf ("um_thds=%d x=%d a=%d\n", omp_get_thread_num(), x, a[i]);
+    }
+  }
+  printf ("x=%d\n", x);
+  return 0;
+}
+                                       ```
+                                       <br>
+    `编译的时候记得加上flag ，在gcc中是 -fopenmp`<br>
+```pseudocode
+    gcc -fopenmp openmp.c
+    ```
+    <br>
+   openmp的并行数量由环境变量OMP_NUM_THREADS来控制比如export OMP_NUM_THREADS=value。注意上面这段代码上第19行x++是并行的，而默认openmp会将所有变量进行共享，所以如果不设成private，那么运行的结果就是不固定的。 <br>
+    ```pseudocode
+    $ ./a.out 
+um_thds=6 x=5 a=1
+um_thds=2 x=9 a=1
+um_thds=8
+um_thds=0 x=10 a=1
+um_thds=7 x=6 a=1
+um_thds=4 x=7 a=1
+um_thds=3 x=8 a=1
+um_thds=5 x=4 a=1
+um_thds=1 x=3 a=1
+x=10
+$ ./a.out 
+um_thds=6 x=6 a=1
+um_thds=4 x=4 a=1
+um_thds=8
+um_thds=0 x=7 a=1
+um_thds=2 x=6 a=1
+um_thds=1 x=3 a=1
+um_thds=5 x=6 a=1
+um_thds=3 x=6 a=1
+um_thds=7 x=6 a=1
+x=7
+$ ./a.out 
+um_thds=8
+um_thds=0 x=9 a=1
+um_thds=1 x=7 a=1
+um_thds=3 x=3 a=1
+um_thds=6 x=8 a=1
+um_thds=7 x=7 a=1
+um_thds=5 x=8 a=1
+um_thds=4 x=8 a=1
+um_thds=2 x=7 a=1
+x=9
+    ```
+    <br>
+    当然如果需要的时候可以混合编程，节点内用OpenMP，节点间用MPI，一般来说这样的效率比较高。至于GPU那又是另一回事。
+    <br>
+    
+    4.6做好了，一个小型的集群！
+    -------
+    
+    新建一个`mpitest.c` 文件<br>
+    ```c
+    #include <mpi.h>
+#include <stdio.h>
+
+int main(int argc, char** argv) {
+  // Initialize the MPI environment
+  MPI_Init(NULL, NULL);
+  // Get the number of processes
+  int world_size;
+  MPI_Comm_size(MPI_COMM_WORLD, &world_size);
+  // Get the rank of the process
+  int world_rank;
+  MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
+  // Get the name of the processor
+  char processor_name[MPI_MAX_PROCESSOR_NAME];
+  int name_len;
+  MPI_Get_processor_name(processor_name, &name_len);
+  // Print off a hello world message
+  printf("Hello world from processor %s, rank %d"
+	 " out of %d processors\n",
+	 processor_name, world_rank, world_size);
+  // Finalize the MPI environment.
+  MPI_Finalize();
+}
+    ```
+   <br>
+    拷贝编译完成的a.out，到另外一台机器，`保证两台机器的a.out出现在同一个目录位置。`
+    
+    ```pseudocode
+    scp ~/a.out XXX.65.121.102:~/a.out 
+    ```
+    <br>
+    
+    然后编辑machinefile
+        ```pseudocode
+server01 cpu=4
+server02 cpu=4
+    ```
+    
+    <br>
+    然后在这个目录下运行a.out`（确保a.out也在这个文件夹下）`
+    <br>
+        ```pseudocode
+    %mpirun --machinefile machinefile -np 8 a.out
+Hello world from processor server01, rank 3 out of 8 processors
+Hello world from processor server01, rank 0 out of 8 processors
+Hello world from processor server01, rank 1 out of 8 processors
+Hello world from processor server01, rank 2 out of 8 processors
+Hello world from processor server02, rank 6 out of 8 processors
+Hello world from processor server02, rank 5 out of 8 processors
+Hello world from processor server02, rank 4 out of 8 processors
+Hello world from processor server02, rank 7 out of 8 processors
+    ```
+    <br>
+    这样就是十分初级的集群的雏形，可以进行多机并列计算。
+    
+ 4.7NFS设置
+    -------
+    
     
     
     
