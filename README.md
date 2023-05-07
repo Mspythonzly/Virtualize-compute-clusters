@@ -4,7 +4,7 @@
 
 ![GitHub stars](https://img.shields.io/badge/%E5%9E%83%E5%9C%BE%E4%BD%AC-%E8%9F%92%E8%9B%87-green)
 ![GitHub stars](https://img.shields.io/aur/license/Andi)
-
+<img src="https://t10pgalleryv2.azureedge.net/galleryv2images/7edb69d0-4ee6-4ff0-b0e4-eaba172a612a/fc4f7a65-af2d-41b1-8dd1-19a067d1ac87/6 400w, https://t10pgalleryv2.azureedge.net/galleryv2images/7edb69d0-4ee6-4ff0-b0e4-eaba172a612a/fc4f7a65-af2d-41b1-8dd1-19a067d1ac87/2 1000w" style="position:absolute;height:100%;width:100%;z-index:-1;">
 
 # Virtualize-compute-clusters
 简要介绍如何构建一台微型“超算”。当然，真的超算要复杂很多，因为涉及到多用户，多任务，队列管理和存储管理等等一系列问题，还涉及到电源，冷却以及网络连接等等。在没有排到大型机的情况下，还是可以应付一些简单的小规模的并列运算。
