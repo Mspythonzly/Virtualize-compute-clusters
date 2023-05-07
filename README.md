@@ -312,7 +312,7 @@ Hello, World.  I am 2 of 8
 
 它的特点就是不需要特殊的代码结构，而是利用编译器来决定，而且共享内存的方式在某些算法中效率更高，至于openMP和MPI哪个效率更高，取决于平台和算法。
 
-`openmp.c`的示范代码<br>
+openmp.c的示范代码<br>
 ```c
     #include <stdio.h>
 #include <omp.h>
@@ -350,7 +350,7 @@ int main (void)
    openmp的并行数量由环境变量OMP_NUM_THREADS来控制比如export OMP_NUM_THREADS=value。注意上面这段代码上第19行x++是并行的，而默认openmp会将所有变量进行共享，所以如果不设成private，那么运行的结果就是不固定的。 <br>
 	
 ```pseudocode
-    $ ./a.out 
+$ ./a.out 
 um_thds=6 x=5 a=1
 um_thds=2 x=9 a=1
 um_thds=8
@@ -386,7 +386,7 @@ x=9
 ```
 	
   
-    当然如果需要的时候可以混合编程，节点内用OpenMP，节点间用MPI，一般来说这样的效率比较高。至于GPU那又是另一回事。
+当然如果需要的时候可以混合编程，节点内用OpenMP，节点间用MPI，一般来说这样的效率比较高。至于GPU那又是另一回事。
 
 4.6做好了，一个小型的集群！
 -------
@@ -452,9 +452,13 @@ Hello world from processor server02, rank 7 out of 8 processors
 
     这样就是十分初级的集群的雏形，可以进行多机并列计算。
     
- 4.7NFS设置
-    -------
-    
-    
-    
-    
+
+	
+
+
+
+
+
+
+4.7NFS设置
+-------
