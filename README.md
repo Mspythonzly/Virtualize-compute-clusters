@@ -30,6 +30,8 @@
 -------
 MPI（message Passing interface）是全世界联合建立的消息传递编程标准，目的是用消息传递提供一个高效可扩展，统一的编程环境，是目前最为通用的并行编程方式，也是主要应用的。MPI有多种"实现"，包括mpich1/mpich2、openmpi、lam-mpi等，每种mpi的实现需要配合相应的编译器，才能发挥作用。
 
+-------
+
 c语言mpi hello world：
 -------
 ```C
