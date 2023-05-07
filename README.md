@@ -301,11 +301,11 @@ Hello, World.  I am 6 of 8
 Hello, World.  I am 7 of 8
 Hello, World.  I am 2 of 8
 ```
-    <br>
-    *利用OpenMP进行多核并行<br>
-    随着现在cpu的核数月来越多，充分的利用节点内的多核也是很重要的，OpenMP（Open Multi-Processing）是一套支持跨平台共享内存方式的多线程并发的编程API。<br>
+    
+    *利用OpenMP进行多核并行
+    随着现在cpu的核数月来越多，充分的利用节点内的多核也是很重要的，OpenMP（Open Multi-Processing）是一套支持跨平台共享内存方式的多线程并发的编程API。
 
-它的特点就是不需要特殊的代码结构，而是利用编译器来决定，而且共享内存的方式在某些算法中效率更高，至于openMP和MPI哪个效率更高，取决于平台和算法。<br>
+它的特点就是不需要特殊的代码结构，而是利用编译器来决定，而且共享内存的方式在某些算法中效率更高，至于openMP和MPI哪个效率更高，取决于平台和算法。
 
 `openmp.c`的示范代码<br>
 ```c
@@ -334,12 +334,16 @@ int main (void)
 }
 ```
                                        <br>
-    `编译的时候记得加上flag ，在gcc中是 -fopenmp`<br>
+	
+`编译的时候记得加上flag ，在gcc中是 -fopenmp`<br>
+	
 ```pseudocode
     gcc -fopenmp openmp.c
 ```
     <br>
+	
    openmp的并行数量由环境变量OMP_NUM_THREADS来控制比如export OMP_NUM_THREADS=value。注意上面这段代码上第19行x++是并行的，而默认openmp会将所有变量进行共享，所以如果不设成private，那么运行的结果就是不固定的。 <br>
+	
 ```pseudocode
     $ ./a.out 
 um_thds=6 x=5 a=1
@@ -375,6 +379,7 @@ um_thds=4 x=8 a=1
 um_thds=2 x=7 a=1
 x=9
 ```
+	
     <br>
     当然如果需要的时候可以混合编程，节点内用OpenMP，节点间用MPI，一般来说这样的效率比较高。至于GPU那又是另一回事。
     <br>
