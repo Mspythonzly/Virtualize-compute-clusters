@@ -278,14 +278,14 @@ rsync -avz ~/.ssh XXX.65.121.102:~/.
     <br>
     编译<br>
     
-   ```pseudocode
+```pseudocode
     %mpirun -np 2 a.out
 Hello, World.  I am 0 of 2
 Hello, World.  I am 1 of 2
-    ```
+```
     <br>
     运行，`-np`就是使用几个节点进行计算，上面这是两个的结果<br>
-    ```pseudocode
+```pseudocode
     %mpirun -np 4 a.out
 Hello, World.  I am 0 of 4
 Hello, World.  I am 1 of 4
@@ -300,7 +300,7 @@ Hello, World.  I am 5 of 8
 Hello, World.  I am 6 of 8
 Hello, World.  I am 7 of 8
 Hello, World.  I am 2 of 8
-    ```
+```
     <br>
     *利用OpenMP进行多核并行<br>
     随着现在cpu的核数月来越多，充分的利用节点内的多核也是很重要的，OpenMP（Open Multi-Processing）是一套支持跨平台共享内存方式的多线程并发的编程API。<br>
@@ -308,7 +308,7 @@ Hello, World.  I am 2 of 8
 它的特点就是不需要特殊的代码结构，而是利用编译器来决定，而且共享内存的方式在某些算法中效率更高，至于openMP和MPI哪个效率更高，取决于平台和算法。<br>
 
 `openmp.c`的示范代码<br>
-    ```c
+```c
     #include <stdio.h>
 #include <omp.h>
 int main (void)
@@ -332,15 +332,15 @@ int main (void)
   printf ("x=%d\n", x);
   return 0;
 }
-                                       ```
+```
                                        <br>
     `编译的时候记得加上flag ，在gcc中是 -fopenmp`<br>
 ```pseudocode
     gcc -fopenmp openmp.c
-    ```
+```
     <br>
    openmp的并行数量由环境变量OMP_NUM_THREADS来控制比如export OMP_NUM_THREADS=value。注意上面这段代码上第19行x++是并行的，而默认openmp会将所有变量进行共享，所以如果不设成private，那么运行的结果就是不固定的。 <br>
-    ```pseudocode
+```pseudocode
     $ ./a.out 
 um_thds=6 x=5 a=1
 um_thds=2 x=9 a=1
@@ -374,7 +374,7 @@ um_thds=5 x=8 a=1
 um_thds=4 x=8 a=1
 um_thds=2 x=7 a=1
 x=9
-    ```
+```
     <br>
     当然如果需要的时候可以混合编程，节点内用OpenMP，节点间用MPI，一般来说这样的效率比较高。至于GPU那又是另一回事。
     <br>
@@ -383,7 +383,7 @@ x=9
     -------
     
     新建一个`mpitest.c` 文件<br>
-    ```c
+```c
     #include <mpi.h>
 #include <stdio.h>
 
@@ -407,25 +407,25 @@ int main(int argc, char** argv) {
   // Finalize the MPI environment.
   MPI_Finalize();
 }
-    ```
+```
    <br>
     拷贝编译完成的a.out，到另外一台机器，`保证两台机器的a.out出现在同一个目录位置。`
     
-    ```pseudocode
+```pseudocode
     scp ~/a.out XXX.65.121.102:~/a.out 
-    ```
+```
     <br>
     
     然后编辑machinefile
-        ```pseudocode
+```pseudocode
 server01 cpu=4
 server02 cpu=4
-    ```
+```
     
     <br>
     然后在这个目录下运行a.out`（确保a.out也在这个文件夹下）`
     <br>
-        ```pseudocode
+```pseudocode
     %mpirun --machinefile machinefile -np 8 a.out
 Hello world from processor server01, rank 3 out of 8 processors
 Hello world from processor server01, rank 0 out of 8 processors
@@ -435,7 +435,7 @@ Hello world from processor server02, rank 6 out of 8 processors
 Hello world from processor server02, rank 5 out of 8 processors
 Hello world from processor server02, rank 4 out of 8 processors
 Hello world from processor server02, rank 7 out of 8 processors
-    ```
+```
     <br>
     这样就是十分初级的集群的雏形，可以进行多机并列计算。
     
