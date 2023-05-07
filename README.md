@@ -425,19 +425,21 @@ int main(int argc, char** argv) {
 ```pseudocode
     scp ~/a.out XXX.65.121.102:~/a.out 
 ```
-    <br>
     
-    然后编辑machinefile
+    
+然后编辑machinefile
+	
 ```pseudocode
 server01 cpu=4
 server02 cpu=4
 ```
     
     <br>
-    然后在这个目录下运行a.out（确保a.out也在这个文件夹下）`
+    然后在这个目录下运行a.out（确保a.out也在这个文件夹下）
     <br>
+	
 ```pseudocode
-    %mpirun --machinefile machinefile -np 8 a.out
+%mpirun --machinefile machinefile -np 8 a.out
 Hello world from processor server01, rank 3 out of 8 processors
 Hello world from processor server01, rank 0 out of 8 processors
 Hello world from processor server01, rank 1 out of 8 processors
