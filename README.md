@@ -338,14 +338,14 @@ int main (void)
   return 0;
 }
 ```
-                                       <br>
+                                   
 	
-`编译的时候记得加上flag ，在gcc中是 -fopenmp`<br>
+编译的时候记得加上flag ，在gcc中是 -fopenmp<br>
 	
 ```pseudocode
     gcc -fopenmp openmp.c
 ```
-    <br>
+
 	
    openmp的并行数量由环境变量OMP_NUM_THREADS来控制比如export OMP_NUM_THREADS=value。注意上面这段代码上第19行x++是并行的，而默认openmp会将所有变量进行共享，所以如果不设成private，那么运行的结果就是不固定的。 <br>
 	
@@ -385,14 +385,14 @@ um_thds=2 x=7 a=1
 x=9
 ```
 	
-    <br>
+  
     当然如果需要的时候可以混合编程，节点内用OpenMP，节点间用MPI，一般来说这样的效率比较高。至于GPU那又是另一回事。
-    <br>
-    
-    4.6做好了，一个小型的集群！
-    -------
+
+4.6做好了，一个小型的集群！
+-------
     
     新建一个`mpitest.c` 文件<br>
+	
 ```c
     #include <mpi.h>
 #include <stdio.h>
