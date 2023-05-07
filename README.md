@@ -279,12 +279,13 @@ rsync -avz ~/.ssh XXX.65.121.102:~/.
     编译<br>
     
 ```pseudocode
-    %mpirun -np 2 a.out
+%mpirun -np 2 a.out
 Hello, World.  I am 0 of 2
 Hello, World.  I am 1 of 2
 ```
     <br>
-    运行，`-np`就是使用几个节点进行计算，上面这是两个的结果<br>
+    运行，-np就是使用几个节点进行计算，上面这是两个的结果<br>
+    
 ```pseudocode
     %mpirun -np 4 a.out
 Hello, World.  I am 0 of 4
