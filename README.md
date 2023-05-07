@@ -434,9 +434,9 @@ server01 cpu=4
 server02 cpu=4
 ```
     
-    <br>
+
     然后在这个目录下运行a.out（确保a.out也在这个文件夹下）
-    <br>
+
 	
 ```pseudocode
 %mpirun --machinefile machinefile -np 8 a.out
@@ -449,7 +449,7 @@ Hello world from processor server02, rank 5 out of 8 processors
 Hello world from processor server02, rank 4 out of 8 processors
 Hello world from processor server02, rank 7 out of 8 processors
 ```
-    <br>
+
     这样就是十分初级的集群的雏形，可以进行多机并列计算。
     
  4.7NFS设置
