@@ -462,3 +462,72 @@ Hello world from processor server02, rank 7 out of 8 processors
 
 4.7NFS设置
 -------
+刚我们进行计算中的重要一步就是吧编译好的可执行程序copy到每一台机器上，并保证其目录的位置相同，为了避免这样的重复操作，我们最好使用共享的文件系统，最简单的方式就是设置NSF。依靠网络进行挂载可以保证每一台节点都可以访问相同的路径。<br>
+先安装相关软件<br>
+```pseudocode
+sudo apt install nfs-utils nfs-utils-lib
+```
+<br>
+设置nfs相关服务在操作系统启动时启动<br>
+```pseudocode
+sudo systemctl enable rpcbind
+sudo systemctl enable nfs-server
+sudo systemctl enable nfs-lock
+sudo systemctl enable nfs-idmap 
+```
+<br>
+启动nfs服务<br>
+```pseudocode
+sudo systemctl start rpcbind
+sudo systemctl start nfs-server
+sudo systemctl start nfs-lock
+sudo systemctl start nfs-idmap 
+```
+服务器端设置NFS卷输出，即编辑 /etc/exports 添加：<br>
+```pseudocode
+sudo emacs /etc/exports
+```
+<br>
+/nfs XXX.65.121.0/24(rw)<br>
+*/nfs – 共享目录<br>
+*<ip>/24 – 允许访问NFS的客户端IP地址段<br>
+*rw – 允许对共享目录进行读写<br>
+当然还有其他设置选项，比如insecure sync ...<br>
+```pseudocode
+sudo exportfs
+```
+<br>
+这个是显示一下是否挂在成功<br>
+```pseudocode
+sudo service nfs status  -l
+```
+查看NFS状态
+```pseudocode
+sudo service nfs restart
+```
+重启NFS，这样，服务器端就设定结束了<br>
+
+Linux挂载NFS的客户端非常简单的命令，先创建挂载目录，然后用 -t nfs 参数挂载就可以了<br>
+```pseudocode
+sudo mount -t nfs  xxx.168.0.100:/nfs /nfs
+```
+	
+```pseudocode	
+可以先查看<br>
+```
+
+```pseudocode	
+showmount -e 192.168.0.100
+```
+	
+如果要设置客户端启动时候就挂载NFS，可以配置 /etc/fstab 添加以下内容
+	
+```pseudocode
+sudo emacs /etc/fstab
+192.168.0.100:/nfs   /nfs defaults     0   0
+```
+	
+然后在客户端简单使用以下命令就可以挂载
+```pseudocode
+sudo mount /nfs
+```
