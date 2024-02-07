@@ -1,6 +1,6 @@
 |      QQ      |    WeChat   |
 |--------------|-------------|
-|  3485757760  |   Linux3_0  |
+|  3485757760  | mspythonzly |
 
 ![GitHub stars](https://img.shields.io/badge/%E5%9E%83%E5%9C%BE%E4%BD%AC-%E8%9F%92%E8%9B%87-green)
 ![GitHub stars](https://img.shields.io/aur/license/Andi)
